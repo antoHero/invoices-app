@@ -120,6 +120,75 @@
               </tbody>
             </table>
             <q-separator />
+            <div class="row justify-center items-center q-pt-md">
+              <div class="row w-100">
+                <div class="row">
+                  <q-card flat>
+                    <b class="m-0">Payment Method</b>
+
+                    <div>
+                      <p class="m-0">Wire Transfer</p>
+                      <p>
+                        <b class="text-grey">Account Name:</b>
+                        Barly Vallendito
+                      </p>
+
+                      <p>
+                        <b class="text-grey">Account Number:</b>
+                        9700 0023 4200 2900
+                      </p>
+                      <p>
+                        <b class="text-grey">Routing Number:</b>
+                        084009519
+                      </p>
+                    </div>
+                  </q-card>
+                </div>
+                <q-space />
+                <q-card flat>
+                  <b class="m-0 text-primary">Select payment</b>
+                  <q-card-section>
+                    <div class="row">
+                      <q-space />
+                      <img
+                        src="~assets/images/wise.png"
+                        alt="wise logo"
+                        height="50"
+                        width="100"
+                      />
+                    </div>
+                  </q-card-section>
+                </q-card>
+              </div>
+              <q-space class="middle-space" />
+              <div class="row w-100">
+                <div class="row">
+                  <q-card flat>
+                    <div>
+                      <p class="m-0">Sub Total</p>
+                    </div>
+                    <q-space />
+
+                    <div>
+                      <p class="m-0">Discount</p>
+                      <p class="m-0">Total Tax</p>
+                      <q-separator />
+                      <p class="m-0 q-mt-md">Total Amount</p>
+                    </div>
+                  </q-card>
+                </div>
+                <q-space />
+                <q-card flat>
+                  <p class="m-0 q-ml-xl">{{ dollar.format(4800) }}</p>
+                  <p class="m-0 q-ml-xl">{{ dollar.format(0) }}</p>
+                  <p class="m-0 q-ml-xl">{{ dollar.format(0) }}</p>
+                  <q-separator />
+                  <p class="m-0 q-ml-xl q-mt-md">
+                    {{ dollar.format(4800) }}
+                  </p>
+                </q-card>
+              </div>
+            </div>
           </div>
         </q-card-section>
       </q-card>
@@ -129,7 +198,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-
+import { dollar } from "../utils/helper";
 const items = [
   {
     id: 1,
@@ -200,8 +269,7 @@ export default defineComponent({
       lineTotal,
       columns,
       rows,
-      lorem:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius",
+      dollar,
     };
   },
 });
