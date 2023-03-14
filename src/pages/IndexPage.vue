@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page padding class="page-container">
     <div class="q-pa-md">
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Invoices" style="color: #9595b9" />
@@ -13,26 +13,7 @@
     <div class="q-pa-md">
       <q-card class="my-card">
         <q-card-section>
-          <div class="row items-start justify-between q-pa-lg">
-            <div class="row items-start justify-evenly">
-              <div>
-                <img
-                  alt="Dipa logo"
-                  src="~assets/images/dipa.png"
-                  style="width: 70px; height: 70px"
-                />
-              </div>
-              <div class="q-mt-md">
-                <span style="color: #6b6d7c">Dipa Inhouse</span>
-                <p style="color: #e1e4e7">hello@dipainhouse.com</p>
-              </div>
-            </div>
-            <div style="color: #e1e4e7">
-              <p>Ijen Boulevard Street 101</p>
-              <p>Malang City, 65115</p>
-              <p>East Java, Indonesia</p>
-            </div>
-          </div>
+          <billing-info></billing-info>
 
           <div class="row items-start justify-between q-pa-lg blue-gradient">
             <div class="column vertical-middle">
@@ -198,6 +179,7 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import BillingInfo from "../components/BillingInfo.vue";
 import { dollar } from "../utils/helper";
 const items = [
   {
@@ -249,7 +231,9 @@ const rows = [
 ];
 export default defineComponent({
   name: "IndexPage",
-
+  components: {
+    BillingInfo,
+  },
   setup() {
     const formData = ref({
       itemName: "Payment Project - Monlight Mobile Design",
@@ -287,6 +271,10 @@ export default defineComponent({
     -moz-radial-gradient(farthest-corner at 0% 0%, #4d4ba2 70%, #6e70ad 70%);
   background: linear-gradient(110deg, #3f3f9f 40%, rgba(0, 0, 0, 0) 30%),
     radial-gradient(farthest-corner at 0% 0%, #4d4ba2 70%, #6e70ad 70%);
+}
+
+.page-container {
+  padding-top: 70px;
 }
 
 .customize-btn {
