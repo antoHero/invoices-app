@@ -24,75 +24,8 @@
               :key="invoiceItemsKey"
             />
             <q-separator />
-            <div class="row justify-center items-center q-pt-md">
-              <div class="row w-100">
-                <div class="row">
-                  <q-card flat>
-                    <b class="m-0">Payment Method</b>
 
-                    <div>
-                      <p class="m-0">Wire Transfer</p>
-                      <p>
-                        <b class="text-grey">Account Name:</b>
-                        Barly Vallendito
-                      </p>
-
-                      <p>
-                        <b class="text-grey">Account Number:</b>
-                        9700 0023 4200 2900
-                      </p>
-                      <p>
-                        <b class="text-grey">Routing Number:</b>
-                        084009519
-                      </p>
-                    </div>
-                  </q-card>
-                </div>
-                <q-space />
-                <q-card flat>
-                  <b class="m-0 text-primary">Select payment</b>
-                  <q-card-section>
-                    <div class="row">
-                      <q-space />
-                      <img
-                        src="~assets/images/wise.png"
-                        alt="wise logo"
-                        height="50"
-                        width="100"
-                      />
-                    </div>
-                  </q-card-section>
-                </q-card>
-              </div>
-              <q-space class="middle-space" />
-              <div class="row w-100">
-                <div class="row">
-                  <q-card flat>
-                    <div>
-                      <p class="m-0">Sub Total</p>
-                    </div>
-                    <q-space />
-
-                    <div>
-                      <p class="m-0">Discount</p>
-                      <p class="m-0">Total Tax</p>
-                      <q-separator />
-                      <p class="m-0 q-mt-md">Total Amount</p>
-                    </div>
-                  </q-card>
-                </div>
-                <q-space />
-                <q-card flat>
-                  <p class="m-0 q-ml-xl">{{ dollar.format(4800) }}</p>
-                  <p class="m-0 q-ml-xl">{{ dollar.format(0) }}</p>
-                  <p class="m-0 q-ml-xl">{{ dollar.format(0) }}</p>
-                  <q-separator />
-                  <p class="m-0 q-ml-xl q-mt-md">
-                    {{ dollar.format(4800) }}
-                  </p>
-                </q-card>
-              </div>
-            </div>
+            <PaymentInfo :paymentInfo="paymentInfo" :key="paymentInfoKey" />
           </div>
         </q-card-section>
       </q-card>
@@ -102,10 +35,11 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import BillingInfo from "../components/BillingInfo.vue";
-import InvoiceCard from "../components/InvoiceCard.vue";
+import BillingInfo from "src/components/BillingInfo.vue";
+import InvoiceCard from "src/components/InvoiceCard.vue";
 import InvoiceItems from "src/components/InvoiceItems.vue";
-import { dollar } from "../utils/helper";
+import PaymentInfo from "src/components/PaymentInfo.vue";
+
 const items = [
   {
     id: 1,
@@ -141,23 +75,36 @@ const rows = [
     line_total: 48000,
   },
 ];
+const paymentInfo = {
+  accountName: "Barley Vallendito",
+  accountNumber: "9700 0023 4200 2900",
+  routingNumber: "084009519",
+  subTotal: 48000,
+  discount: 0,
+  tax: 0,
+};
 export default defineComponent({
   name: "IndexPage",
   components: {
     BillingInfo,
     InvoiceCard,
     InvoiceItems,
+    PaymentInfo,
   },
   setup() {
     const invoiceItemsKey = ref(0);
 
+    const paymentInfoKey = ref(0);
+
     invoiceItemsKey.value += 1;
+    paymentInfoKey.value += 1;
 
     return {
       tableHeaders: items,
       rows,
-      dollar,
       invoiceItemsKey,
+      paymentInfo,
+      paymentInfoKey,
     };
   },
 });
