@@ -2,20 +2,27 @@
   <div class="row items-start justify-between q-pa-lg blue-gradient">
     <div class="column vertical-middle">
       <p><b>Invoice Number</b></p>
-      <p>INV-2022-010</p>
-      <p>Issued Date: 11 Jan 2022</p>
-      <p>Due Date: 18 Jan 2022</p>
+      <p>{{ store?.state?.activeInvoice?.invoiceNumber.toUpperCase() }}</p>
+      <p>Issued Date: {{ store?.state?.activeInvoice?.issuedDate }}</p>
+      <p>Due Date: {{ store?.state?.activeInvoice?.dueDate }}</p>
     </div>
     <q-space />
     <div class="column text-right vertical-middle">
       <p><b>Billed To</b></p>
-      <p>Zaky Grizzly</p>
-      <p>Monlight Agency LTD</p>
-      <p>East Java, Indonesia</p>
+      <p>{{ props?.customer?.name }}</p>
+      <p>{{ props?.customer?.companyName }}</p>
+      <p>{{ `${props?.customer?.state}, ${props?.customer?.country}` }}</p>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { useStore } from "vuex";
+const props = defineProps({
+  customer: Object,
+});
+
+const store = useStore();
+</script>
 <style scoped>
 .blue-gradient {
   color: #fff;
