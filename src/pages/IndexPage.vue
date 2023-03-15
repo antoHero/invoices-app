@@ -4,7 +4,7 @@
       <q-breadcrumbs>
         <q-breadcrumbs-el label="Invoices" style="color: #9595b9" />
         <q-breadcrumbs-el
-          label="edit Invoice (INV-2022-010)"
+          :label="`edit Invoice (${invoice_number.toUpperCase()})`"
           style="color: #dcdfe9"
         />
       </q-breadcrumbs>
@@ -13,7 +13,7 @@
     <div class="q-pa-md">
       <q-card class="my-card">
         <q-card-section>
-          <billing-info></billing-info>
+          <BillingInfo :company="invoice?.company" :key="billingInfoKey" />
 
           <invoice-card></invoice-card>
 
@@ -96,14 +96,20 @@ export default defineComponent({
 
     const paymentInfoKey = ref(0);
 
+    const billingInfoKey = ref(0);
+
+    const invoice = ref({});
+
     const invoice_number = ref("inv-2022-010");
 
     const getInvoice = () => {
-      console.log(invoice_number.value);
       fetch(`/api/invoices/${invoice_number.value}`)
         .then((response) => response.json())
-        .then((invoice) => {
-          console.log(invoice);
+        .then((response) => {
+          const { invoices } = response;
+          invoice.value = invoices[0];
+          invoiceItemsKey.value += 1;
+          billingInfoKey.value += 1;
         });
     };
 
@@ -117,6 +123,9 @@ export default defineComponent({
       invoiceItemsKey,
       paymentInfo,
       paymentInfoKey,
+      billingInfoKey,
+      invoice_number,
+      invoice,
     };
   },
 });

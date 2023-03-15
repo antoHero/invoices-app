@@ -30,7 +30,7 @@ export function makeServer({ environment = "development" } = {}) {
           email: "hello@dipainhouse.com",
           logo: "",
           addressOne: "Ijen Boulevard Street 101",
-          addressTeo: "Malang City, 65115",
+          addressTwo: "Malang City, 65115",
           state: "East Java",
           country: "Indonesia",
         },
@@ -55,9 +55,9 @@ export function makeServer({ environment = "development" } = {}) {
     routes() {
       this.namespace = "api";
       this.get("/invoices/:id", (schema, request) => {
-        let invoiceid = request.params.id;
-        let invoice = schema.invoices.where({ invoiceNumber: invoiceid });
-        return invoice;
+        return schema.invoices.where({
+          invoiceNumber: request.params.id,
+        });
       });
     },
   });
