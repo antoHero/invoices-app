@@ -1,63 +1,24 @@
 <template>
   <!-- navigation | css -> nav.css -->
   <nav class="bg">
-    <div class="desktop-container">
+    <div class="desktop-container nav-content">
       <div class="desktop-container-1">
-        <div class="desktop-container-2">
-          <!-- mobile menu button-->
-          <span
-            class="mobile-menu-button"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-            @click="is_visible = !is_visible"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              xmlns:svgjs="http://svgjs.com/svgjs"
-              version="1.1"
-              x="0"
-              y="0"
-              viewBox="0 0 512 512"
-              style="enable-background: new 0 0 512 512"
-              xml:space="preserve"
-              class="humburger"
-            >
-              <g>
-                <g xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="m174 240h-108c-36.393 0-66-29.607-66-66v-108c0-36.393 29.607-66 66-66h108c36.393 0 66 29.607 66 66v108c0 36.393-29.607 66-66 66zm-108-208c-18.748 0-34 15.252-34 34v108c0 18.748 15.252 34 34 34h108c18.748 0 34-15.252 34-34v-108c0-18.748-15.252-34-34-34z"
-                    fill="#838383"
-                    data-original="#000000"
-                  />
-                  <path
-                    d="m446 240h-108c-36.393 0-66-29.607-66-66v-108c0-36.393 29.607-66 66-66h108c36.393 0 66 29.607 66 66v108c0 36.393-29.607 66-66 66zm-108-208c-18.748 0-34 15.252-34 34v108c0 18.748 15.252 34 34 34h108c18.748 0 34-15.252 34-34v-108c0-18.748-15.252-34-34-34z"
-                    fill="#838383"
-                    data-original="#000000"
-                  />
-                  <path
-                    d="m392 512c-66.168 0-120-53.832-120-120s53.832-120 120-120 120 53.832 120 120-53.832 120-120 120zm0-208c-48.523 0-88 39.477-88 88s39.477 88 88 88 88-39.477 88-88-39.477-88-88-88z"
-                    fill="#838383"
-                    data-original="#000000"
-                  />
-                  <path
-                    d="m174 512h-108c-36.393 0-66-29.607-66-66v-108c0-36.393 29.607-66 66-66h108c36.393 0 66 29.607 66 66v108c0 36.393-29.607 66-66 66zm-108-208c-18.748 0-34 15.252-34 34v108c0 18.748 15.252 34 34 34h108c18.748 0 34-15.252 34-34v-108c0-18.748-15.252-34-34-34z"
-                    fill="#838383"
-                    data-original="#000000"
-                  />
-                </g>
-              </g>
-            </svg>
-          </span>
-        </div>
         <div class="desktop-container-3">
           <div class="desktop-container-4">
             <span class="logo"> Paypay. </span>
           </div>
-          <div class="desktop-container-5">
+          <div class="desktop-container-5" v-if="width > 1000">
             <div class="desktop-container-6">
-              <a href="#" class="desktop-nav-link">
+              <router-link
+                to="/dashboard"
+                href="#"
+                :class="
+                  $route.matched.some(({ path }) => path === '/dashboard')
+                    ? 'active'
+                    : ''
+                "
+                class="desktop-nav-link"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="desktop-nav-link-icon"
@@ -73,11 +34,19 @@
                   />
                 </svg>
                 <span class="desktop-nav-link-text">Dashboard</span>
-              </a>
-              <a href="#" class="desktop-nav-link-active" aria-current="page">
+              </router-link>
+              <router-link
+                to="/"
+                :class="
+                  $route.matched.some(({ path }) => path === '/')
+                    ? 'active'
+                    : ''
+                "
+                class="desktop-nav-link"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="desktop-nav-link-icon desktop-nav-link-icon-active"
+                  class="desktop-nav-link-icon"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -90,8 +59,16 @@
                   />
                 </svg>
                 <span class="desktop-nav-link-text">Invoices</span>
-              </a>
-              <a href="#" class="desktop-nav-link">
+              </router-link>
+              <router-link
+                to="/wallet"
+                :class="
+                  $route.matched.some(({ path }) => path === '/wallet')
+                    ? 'active'
+                    : ''
+                "
+                class="desktop-nav-link"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="desktop-nav-link-icon"
@@ -107,8 +84,16 @@
                   />
                 </svg>
                 <span class="desktop-nav-link-text">Wallet</span>
-              </a>
-              <a href="#" class="desktop-nav-link">
+              </router-link>
+              <router-link
+                to="/activity"
+                :class="
+                  $route.matched.some(({ path }) => path === '/activity')
+                    ? 'active'
+                    : ''
+                "
+                class="desktop-nav-link"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="desktop-nav-link-icon"
@@ -124,8 +109,16 @@
                   />
                 </svg>
                 <span class="desktop-nav-link-text">Activity</span>
-              </a>
-              <a href="#" class="desktop-nav-link">
+              </router-link>
+              <router-link
+                to="/help"
+                :class="
+                  $route.matched.some(({ path }) => path === '/help')
+                    ? 'active'
+                    : ''
+                "
+                class="desktop-nav-link"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="desktop-nav-link-icon"
@@ -141,23 +134,10 @@
                   />
                 </svg>
                 <span class="desktop-nav-link-text">Help</span>
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- mobile menu show/hide based on menu state. -->
-    <div class="mobile-container" v-if="is_visible">
-      <div class="mobile-container-1">
-        <a href="#" class="mobile-nav-link">Dashboard</a>
-        <a href="#" class="mobile-nav-link-active" aria-current="page"
-          >Invoices</a
-        >
-        <a href="#" class="mobile-nav-link">Wallet</a>
-        <a href="#" class="mobile-nav-link">Activity</a>
-        <a href="#" class="mobile-nav-link">Help</a>
       </div>
     </div>
   </nav>
@@ -165,22 +145,33 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-
+import { domSize } from "src/utils/helper";
 export default defineComponent({
   name: "QNavigation",
   components: {},
   setup() {
-    // reactive state
-    let is_visible = ref(false);
-
+    const { width, height } = domSize();
     return {
-      is_visible,
+      width,
+      height,
     };
   },
 });
 </script>
 
 <style scoped>
+nav {
+  width: 100%;
+  display: flex;
+  padding-top: 2px;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.nav-content {
+  width: 100%;
+  max-width: 1280px;
+}
 .bg {
   background-color: #fff;
   position: fixed;
@@ -193,7 +184,7 @@ export default defineComponent({
 .desktop-container {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  max-width: 80rem;
+  max-width: 1280px;
 }
 
 .desktop-container-1 {
@@ -248,28 +239,10 @@ export default defineComponent({
   text-decoration: none;
 }
 
-.desktop-nav-link-active {
-  display: inline-flex;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  color: #1d4ed8;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 500;
-  border-bottom: 2px solid #1d4ed8;
-  text-decoration: none;
-}
-
 .desktop-nav-link-icon {
   color: #838383;
   width: 1.25rem;
   height: 1.25rem;
-}
-
-.desktop-nav-link-icon-active {
-  color: #1d4ed8 !important;
 }
 
 .desktop-nav-link-text {
@@ -295,21 +268,6 @@ export default defineComponent({
   color: #ffffff;
 }
 
-.mobile-nav-link-active {
-  display: block;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  background-color: #1d4ed8;
-  color: #ffffff;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 500;
-  border-radius: 0.375rem;
-  text-decoration: none;
-}
-
 .humburger {
   width: 1.5rem;
   height: 1.5rem;
@@ -317,20 +275,15 @@ export default defineComponent({
 }
 
 .mobile-container-1 {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.75rem;
   margin-top: 0.25rem;
-}
-
-.mobile-menu-button {
-  display: inline-flex;
-  padding: 0.5rem;
-  color: #9ca3af;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.375rem;
 }
 
 .logo {
@@ -347,18 +300,6 @@ export default defineComponent({
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
-}
-
-.icon {
-  display: block;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.hidden-icon {
-  display: none;
-  width: 1.5rem;
-  height: 1.5rem;
 }
 
 @media (min-width: 640px) {
@@ -399,5 +340,10 @@ export default defineComponent({
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+.active {
+  color: #383584;
+  border-bottom: 2px solid #383584;
 }
 </style>
