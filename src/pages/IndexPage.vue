@@ -15,7 +15,7 @@
         <q-card-section>
           <BillingInfo :company="invoice?.company" :key="billingInfoKey" />
 
-          <invoice-card></invoice-card>
+          <InvoiceCard :customer="invoice?.customer" :key="invoiceCardKey" />
 
           <div class="q-pa-lg">
             <InvoiceItems
@@ -39,6 +39,7 @@ import BillingInfo from "src/components/BillingInfo.vue";
 import InvoiceCard from "src/components/InvoiceCard.vue";
 import InvoiceItems from "src/components/InvoiceItems.vue";
 import PaymentInfo from "src/components/PaymentInfo.vue";
+import { useStore } from "vuex";
 
 const items = [
   {
@@ -98,9 +99,13 @@ export default defineComponent({
 
     const billingInfoKey = ref(0);
 
+    const invoiceCardKey = ref(1);
+
     const invoice = ref({});
 
     const invoice_number = ref("inv-2022-010");
+
+    const store = useStore();
 
     const getInvoice = () => {
       fetch(`/api/invoices/${invoice_number.value}`)
@@ -108,8 +113,11 @@ export default defineComponent({
         .then((response) => {
           const { invoices } = response;
           invoice.value = invoices[0];
+          store.commit("setActiveInvoice", invoices[0]);
           invoiceItemsKey.value += 1;
           billingInfoKey.value += 1;
+          invoiceCardKey.value += 1;
+          console.log(invoices[0]);
         });
     };
 
@@ -124,6 +132,7 @@ export default defineComponent({
       paymentInfo,
       paymentInfoKey,
       billingInfoKey,
+      invoiceCardKey,
       invoice_number,
       invoice,
     };

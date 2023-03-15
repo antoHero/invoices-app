@@ -4,7 +4,7 @@
       <div>
         <div class="company-logo" v-if="props?.company?.logo !== ''">
           <img
-            v-bind:src="require('assets/images/dipa.png')"
+            v-bind:src="`assets/images/dipa.png`"
             :alt="`${props?.company?.name}-logo`"
           />
         </div>

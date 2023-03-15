@@ -14,8 +14,8 @@ export function makeServer({ environment = "development" } = {}) {
       server.create("invoice", {
         id: 1,
         invoiceNumber: "inv-2022-010",
-        issuedDate: "2022-01-11",
-        dueDate: "2022-01-18",
+        issuedDate: "11 Jan 2022",
+        dueDate: "18 Jan 2022",
         items: [
           {
             name: "Payment Project - Monlight Mobile Design",
