@@ -9,7 +9,7 @@
       <div class="info-left-container-3">
         <span class="info-left-text-5">Wire Transfer</span>
         <img
-          src="~assets/images/wise.png"
+          :src="paymentInfo?.paymentChannelLogo"
           alt="wise logo"
           height="50"
           width="100"
@@ -19,20 +19,18 @@
         <div style="margin-top: 10px">
           <p>
             <span class="checkout-text-1">Account Name: </span>
-            <span class="checkout-text-2">
-              {{ props?.paymentInfo?.accountName }}</span
-            >
+            <span class="checkout-text-2"> {{ paymentInfo?.accountName }}</span>
           </p>
           <p>
             <span class="checkout-text-1">Account Number: </span>
             <span class="checkout-text-2">
-              {{ props?.paymentInfo?.accountNumber }}</span
+              {{ paymentInfo?.accountNumber }}</span
             >
           </p>
           <p>
             <span class="checkout-text-1">Routing Number: </span>
             <span class="checkout-text-2">
-              {{ props?.paymentInfo?.routingNumber }}</span
+              {{ paymentInfo?.routingNumber }}</span
             >
           </p>
         </div>
@@ -53,14 +51,14 @@
           style="text-align: right"
         >
           <p class="m-0 q-ml-xl">
-            {{ dollar.format(props?.paymentInfo?.subTotal) }}
+            {{ subTotal }}
           </p>
           <p class="m-0 q-ml-xl">
-            {{ dollar.format(props?.paymentInfo?.discount) }}
+            {{ dollar.format(charge?.discount) }}
           </p>
-          <p class="m- q-ml-xl">{{ dollar.format(props?.paymentInfo?.tax) }}</p>
+          <p class="m- q-ml-xl">{{ dollar.format(charge?.tax) }}</p>
           <p class="" style="margin-top: 50px">
-            {{ dollar.format(total) }}
+            {{ totalPrice }}
           </p>
         </div>
       </div>
@@ -69,16 +67,47 @@
 </template>
 
 <script setup>
+import { computed, ref, reactive } from "vue";
+import { useStore } from "vuex";
 import { dollar } from "../utils/helper";
 
-const props = defineProps({
-  paymentInfo: Object,
+const paymentInfo = ref({});
+
+const charge = reactive({
+  discount: 0,
+  tax: 0,
 });
 
-const total =
-  props?.paymentInfo?.subTotal +
-  props?.paymentInfo?.discount +
-  props?.paymentInfo?.tax;
+const store = useStore();
+
+const totalPrice = computed(() => {
+  let total = 0;
+  store?.state?.activeInvoice?.items.forEach((item) => {
+    total += item.hours * item.rate + item.tax * 100;
+  });
+
+  return dollar.format(total);
+});
+
+const subTotal = computed(() => {
+  let total = 0;
+  store?.state?.activeInvoice?.items.forEach((item) => {
+    total += item.hours * item.rate;
+  });
+
+  return dollar.format(total);
+});
+
+const getPaymentInformation = () => {
+  fetch(`/api/invoices/${store?.state?.activeInvoice?.id}/payment`)
+    .then((response) => response.json())
+    .then((response) => {
+      const { payments } = response;
+      paymentInfo.value = payments[0];
+    });
+};
+
+getPaymentInformation();
 </script>
 
 <style scoped>

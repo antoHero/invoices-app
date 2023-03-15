@@ -2,13 +2,12 @@
   <div class="row items-start justify-between q-pa-lg">
     <div class="row items-start justify-evenly">
       <div>
-        <div class="company-logo" v-if="props?.company?.logo !== ''">
+        <div class="company-logo">
           <img
-            v-bind:src="`assets/images/dipa.png`"
+            v-bind:src="`src/assets/images/dipa.png`"
             :alt="`${props?.company?.name}-logo`"
           />
         </div>
-        <span class="dipa-logo" v-else>D</span>
       </div>
       <div class="q-mt-xs q-ml-md content">
         <span>{{ props?.company?.name }}</span>
@@ -55,7 +54,6 @@ const props = defineProps({
   height: 50px;
   overflow: hidden;
   border-radius: 100%;
-  margin-right: 1rem;
 }
 
 .company-logo img {

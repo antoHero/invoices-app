@@ -2,7 +2,7 @@
   <div class="row items-start justify-between q-pa-lg blue-gradient">
     <div class="column vertical-middle">
       <p><b>Invoice Number</b></p>
-      <p>INV-2022-010</p>
+      <p>{{ store?.state?.activeInvoice?.invoiceNumber.toUpperCase() }}</p>
       <p>Issued Date: {{ store?.state?.activeInvoice?.issuedDate }}</p>
       <p>Due Date: {{ store?.state?.activeInvoice?.dueDate }}</p>
     </div>

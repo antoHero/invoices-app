@@ -18,14 +18,10 @@
           <InvoiceCard :customer="invoice?.customer" :key="invoiceCardKey" />
 
           <div class="q-pa-lg">
-            <InvoiceItems
-              :tableHeaders="tableHeaders"
-              :rows="rows"
-              :key="invoiceItemsKey"
-            />
+            <InvoiceItems :tableHeaders="tableHeaders" :key="invoiceItemsKey" />
             <q-separator />
 
-            <PaymentInfo :paymentInfo="paymentInfo" :key="paymentInfoKey" />
+            <payment-info></payment-info>
           </div>
         </q-card-section>
       </q-card>
@@ -67,23 +63,7 @@ const items = [
     name: "",
   },
 ];
-const rows = [
-  {
-    name: "Payment Project - Monlight Mobile Design",
-    hours: 120,
-    rate: 40,
-    tax: 30,
-    line_total: 48000,
-  },
-];
-const paymentInfo = {
-  accountName: "Barley Vallendito",
-  accountNumber: "9700 0023 4200 2900",
-  routingNumber: "084009519",
-  subTotal: 48000,
-  discount: 0,
-  tax: 0,
-};
+
 export default defineComponent({
   name: "IndexPage",
   components: {
@@ -94,8 +74,6 @@ export default defineComponent({
   },
   setup() {
     const invoiceItemsKey = ref(0);
-
-    const paymentInfoKey = ref(0);
 
     const billingInfoKey = ref(0);
 
@@ -117,20 +95,14 @@ export default defineComponent({
           invoiceItemsKey.value += 1;
           billingInfoKey.value += 1;
           invoiceCardKey.value += 1;
-          console.log(invoices[0]);
         });
     };
 
     getInvoice();
 
-    paymentInfoKey.value += 1;
-
     return {
       tableHeaders: items,
-      rows,
       invoiceItemsKey,
-      paymentInfo,
-      paymentInfoKey,
       billingInfoKey,
       invoiceCardKey,
       invoice_number,

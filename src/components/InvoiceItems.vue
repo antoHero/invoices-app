@@ -23,7 +23,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, idx) in props.rows" :key="idx">
+        <tr
+          v-for="(item, idx) in store?.state?.activeInvoice?.items"
+          :key="idx"
+        >
           <td data-label="item Name">
             <div class="mb-2 table-items">
               {{ item.name }}
@@ -37,17 +40,17 @@
 
           <td data-label="Rate/hr">
             <div class="table-items">
-              {{ item.rate }}
+              {{ dollar.format(item.rate) }}
             </div>
           </td>
           <td data-label="Tax">
             <div class="table-items">
-              {{ item.tax }}
+              {{ dollar.format(item.tax) }}
             </div>
           </td>
           <td data-label="Line Total">
             <div class="table-items">
-              {{ item.line_total }}
+              {{ total(item?.hours, item?.rate, item?.tax) }}
             </div>
           </td>
           <td data-label="Action">
@@ -65,10 +68,17 @@
 </template>
 
 <script setup>
+import { useStore } from "vuex";
+import { dollar } from "src/utils/helper";
 const props = defineProps({
   tableHeaders: Array,
-  rows: Array,
 });
+
+const store = useStore();
+
+const total = (hours, rate, tax) => {
+  return dollar.format(hours * rate + tax * 100);
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,11 +1,12 @@
-import { createServer, Model, belongsTo } from "miragejs";
-
+import { createServer, Model, hasMany, belongsTo } from "miragejs";
 export function makeServer({ environment = "development" } = {}) {
   let server = createServer({
     environment,
     models: {
-      invoice: Model,
-      payment_information: Model.extend({
+      invoice: Model.extend({
+        payments: hasMany(),
+      }),
+      payment: Model.extend({
         invoice: belongsTo(),
       }),
     },
@@ -41,11 +42,12 @@ export function makeServer({ environment = "development" } = {}) {
           country: "USA",
         },
       });
-      server.create("payment_information", {
+      server.create("payment", {
         id: 1,
-        invoiceNumber: "inv-2022-010",
+        invoiceId: 1,
         paymentType: "Wire Transfer",
         paymentChannel: "Wise",
+        paymentChannelLogo: "src/assets/images/wise.png",
         accountNumber: "9700002342002900",
         accountName: "Barley Vallendito",
         routingNumber: "084009519",
@@ -58,6 +60,11 @@ export function makeServer({ environment = "development" } = {}) {
         return schema.invoices.where({
           invoiceNumber: request.params.id,
         });
+      });
+
+      this.get("/invoices/:id/payment", (schema, request) => {
+        let invoice = schema.invoices.find(request.params.id);
+        return invoice.payments;
       });
     },
   });
