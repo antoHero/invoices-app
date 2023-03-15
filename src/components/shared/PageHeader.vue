@@ -38,7 +38,7 @@
               <router-link
                 to="/"
                 :class="
-                  $route.matched.some(({ path }) => path === '/')
+                  $route.matched.some(({ path }) => path === '/invoices')
                     ? 'active'
                     : ''
                 "

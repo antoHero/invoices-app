@@ -33,7 +33,9 @@
           <router-link
             to="/"
             :class="
-              $route.matched.some(({ path }) => path === '/') ? 'active' : ''
+              $route.matched.some(({ path }) => path === '/invoices')
+                ? 'active'
+                : ''
             "
             class="desktop-nav-link"
           >
