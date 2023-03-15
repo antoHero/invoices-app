@@ -96,7 +96,19 @@ export default defineComponent({
 
     const paymentInfoKey = ref(0);
 
-    invoiceItemsKey.value += 1;
+    const invoice_number = ref("inv-2022-010");
+
+    const getInvoice = () => {
+      console.log(invoice_number.value);
+      fetch(`/api/invoices/${invoice_number.value}`)
+        .then((response) => response.json())
+        .then((invoice) => {
+          console.log(invoice);
+        });
+    };
+
+    getInvoice();
+
     paymentInfoKey.value += 1;
 
     return {
